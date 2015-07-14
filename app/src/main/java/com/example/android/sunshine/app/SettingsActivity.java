@@ -35,6 +35,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         addPreferencesFromResource(R.xml.pref_general);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_temp_key)));
         // Add 'general' preferences, defined in the XML file
         // TODO: Add preferences from XML
 

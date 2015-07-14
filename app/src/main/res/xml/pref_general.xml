@@ -9,6 +9,13 @@
         android:defaultValue="@string/pref_location_default"
         android:inputType="text"
         android:singleLine="true">
-
     </EditTextPreference>
+    <ListPreference
+        android:key="@string/pref_temp_key"
+        android:title="@string/pref_temp_label"
+        android:defaultValue="0"
+        android:inputType="number"
+        android:entries="@array/listentries"
+        android:entryValues="@array/listvalues">
+    </ListPreference>
 </PreferenceScreen>

@@ -16,12 +16,17 @@
 package com.example.android.sunshine.app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
+
+    private static final String LOG_TAG = MainActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,20 @@ public class MainActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SettingsActivity.class));
             return true;
+        } else if (id == R.id.action_view_location) {
+            Intent viewLoc = new Intent();
+            Uri geoLoc = Uri.parse("geo:0,0?").buildUpon()
+                    .appendQueryParameter("q", PreferenceManager.getDefaultSharedPreferences(getApplication())
+                            .getString(getString(R.string.pref_location_key),
+                                    getString(R.string.pref_location_default))).build();
+
+            viewLoc.setAction(Intent.ACTION_VIEW);
+            viewLoc.setData(geoLoc);
+            if (viewLoc.resolveActivity(getPackageManager()) != null) {
+                startActivity(viewLoc);
+            } else {
+                Log.v(LOG_TAG, "Couldn't open location");
+            }
         }
 
         return super.onOptionsItemSelected(item);

@@ -24,5 +24,8 @@
     <string name="pref_location_key">LOCATION</string>
     <string name="pref_location_label">Location</string>
     <string name="pref_location_default">Mumbai</string>
+    <string name="pref_temp_key">TEMP</string>
+    <string name="pref_temp_label">Units</string>
+    <string name="action_view_location">Location</string>
 
 </resources>
