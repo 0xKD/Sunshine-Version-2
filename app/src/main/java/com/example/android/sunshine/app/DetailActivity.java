@@ -13,19 +13,21 @@
 
 package com.example.android.sunshine.app;
 
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,8 +67,25 @@ public class DetailActivity extends AppCompatActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class DetailFragment extends Fragment {
+        private static String detailText;
 
         public DetailFragment() {
+            setHasOptionsMenu(true);
+        }
+
+
+        @Override
+        public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+            super.onCreateOptionsMenu(menu, inflater);
+            inflater.inflate(R.menu.detailfragment, menu);
+            MenuItem share = menu.findItem(R.id.action_share);
+            ShareActionProvider shareAction = (ShareActionProvider) MenuItemCompat.getActionProvider(share);
+            Intent shareIntent = new Intent()
+                    .setAction(Intent.ACTION_SEND)
+                    .putExtra(Intent.EXTRA_TEXT, detailText)
+                    .setType("text/plain")
+                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            shareAction.setShareIntent(shareIntent);
         }
 
         @Override
@@ -79,6 +98,7 @@ public class DetailActivity extends AppCompatActivity {
             Intent intent = getActivity().getIntent();
             if (intent != null && intent.hasExtra(Intent.EXTRA_TEXT)) {
                 String forecastStr = intent.getStringExtra(Intent.EXTRA_TEXT);
+                detailText = forecastStr;
                 ((TextView) rootView.findViewById(R.id.detail_text))
                         .setText(forecastStr);
             }
