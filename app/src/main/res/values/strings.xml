@@ -28,5 +28,6 @@
     <string name="pref_temp_label">Units</string>
     <string name="action_view_location">Location</string>
     <string name="action_share">Share</string>
+    <string name="share_whatsapp">Share on Whatsapp</string>
 
 </resources>

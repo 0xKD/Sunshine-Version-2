@@ -13,6 +13,9 @@
 
 package com.example.android.sunshine.app;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.ShareActionProvider;
@@ -25,7 +28,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class DetailActivity extends AppCompatActivity {
     @Override
@@ -73,7 +78,6 @@ public class DetailActivity extends AppCompatActivity {
             setHasOptionsMenu(true);
         }
 
-
         @Override
         public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
             super.onCreateOptionsMenu(menu, inflater);
@@ -103,6 +107,20 @@ public class DetailActivity extends AppCompatActivity {
                         .setText(forecastStr);
             }
 
+            // TEMP: Checking if it is possible to open chat with whatsapp contact with payload
+            // It is possible to open chat window with contact but no payload is set
+            Button waButton = (Button) rootView.findViewById(R.id.whatsapp_share);
+            waButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PackageManager pm = getActivity().getPackageManager();
+                    Uri uri = Uri.parse("smsto:9820167252");
+                    Intent waIntent = new Intent(Intent.ACTION_SENDTO, uri);
+                    waIntent.putExtra(Intent.EXTRA_TEXT, "Hello world!");
+                    waIntent.setPackage("com.whatsapp");
+                    startActivity(Intent.createChooser(waIntent, "Share with"));
+                }
+            });
             return rootView;
         }
     }
